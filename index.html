@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap - Learn & Share Technical Skills</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-explore {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-explore:hover {
+            background: #f0f0f0;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .section-desc {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #667eea;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .skill-level {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .skill-teachers {
+            color: #667eea;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-access {
+            background: #667eea;
+            color: white;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-access:hover {
+            background: #764ba2;
+        }
+
+        /* Features Section */
+        .features {
+            background: #f8f9fa;
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+            border-radius: 10px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-box {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            color: #666;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🚀 SkillSwap</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+        <div class="auth-buttons">
+            <button class="btn btn-secondary" onclick="openModal('loginModal')">Login</button>
+            <button class="btn btn-primary" onclick="openModal('signupModal')">Sign Up</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero" id="home">
+        <h1>Master Technical Skills Through Community Learning</h1>
+        <p>Learn from experts, share your knowledge, and grow together</p>
+        <div class="cta-buttons">
+            <button class="btn btn-cta btn-explore" onclick="document.getElementById('skills').scrollIntoView()">Explore Skills</button>
+            <button class="btn btn-cta btn-secondary" onclick="openModal('signupModal')">Join Now</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Skills Section -->
+        <div class="skills-section" id="skills">
+            <h2 class="section-title">Available Skills</h2>
+            <p class="section-desc">Choose from a wide range of programming and computer science topics</p>
+
+            <!-- Filters -->
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterSkills('all')">All</button>
+                <button class="filter-btn" onclick="filterSkills('programming')">Programming</button>
+                <button class="filter-btn" onclick="filterSkills('database')">Database</button>
+                <button class="filter-btn" onclick="filterSkills('theory')">Theory</button>
+            </div>
+
+            <!-- Skills Grid -->
+            <div class="skills-grid" id="skillsGrid">
+                <!-- Skills will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features" id="about">
+            <h2 class="section-title">Why Choose SkillSwap?</h2>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-title">Learn Together</div>
+                    <p class="feature-desc">Collaborate with peers and learn from experienced mentors</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-title">Skill Exchange</div>
+                    <p class="feature-desc">Share what you know and gain skills in return</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Structured Courses</div>
+                    <p class="feature-desc">Follow curated learning paths with project-based learning</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🤝</div>
+                    <div class="feature-title">Community Support</div>
+                    <p class="feature-desc">Get help from active community members anytime</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">📜</div>
+                    <div class="feature-title">Certificates</div>
+                    <p class="feature-desc">Earn certificates upon completing skill modules</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🚀</div>
+                    <div class="feature-title">Pull Requests</div>
+                    <p class="feature-desc">Submit projects and get reviewed by the community</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2 style="margin-bottom: 1.5rem; color: #667eea;">Create Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirm">Confirm Password</label>
+                    <input type="password" id="signupConfirm" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; background: #667eea; color: white; margin-top: 1rem;">Sign Up</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem; color: #666;">
+                Already have an account? <a href="#" onclick="closeModal('signupModal'); openModal('loginModal')" style="color: #667eea; font-weight: bold;">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2 style="margin-bottom: 1.5rem; color: #667eea;">Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; background: #667eea; color: white; margin-top: 1rem;">Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem; color: #666;">
+                Don't have an account? <a href="#" onclick="closeModal('loginModal'); openModal('signupModal')" style="color: #667eea; font-weight: bold;">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 SkillSwap. All rights reserved. | Learn. Share. Grow.</p>
+    </footer>
+
+    <script>
+        // Skills Data
+        const skillsData = [
+            { id: 1, name: 'Java', icon: '☕', level: 'Beginner to Advanced', category: 'programming', teachers: 120 },
+            { id: 2, name: 'Python', icon: '🐍', level: 'Beginner to Advanced', category: 'programming', teachers: 150 },
+            { id: 3, name: 'C', icon: '©️', level: 'Intermediate', category: 'programming', teachers: 85 },
+            { id: 4, name: 'C++', icon: '⚙️', level: 'Intermediate to Advanced', category: 'programming', teachers: 90 },
+            { id: 5, name: 'SQL', icon: '🗄️', level: 'Beginner to Intermediate', category: 'database', teachers: 110 },
+            { id: 6, name: 'DBMS', icon: '💾', level: 'Intermediate', category: 'database', teachers: 75 },
+            { id: 7, name: 'DSA', icon: '🔗', level: 'Intermediate to Advanced', category: 'theory', teachers: 140 },
+            { id: 8, name: 'DAA', icon: '📊', level: 'Advanced', category: 'theory', teachers: 60 },
+            { id: 9, name: 'COA', icon: '🖥️', level: 'Intermediate', category: 'theory', teachers: 65 },
+            { id: 10, name: 'Computer Networks', icon: '🌐', level: 'Intermediate', category: 'theory', teachers: 95 },
+            { id: 11, name: 'JavaScript', icon: '⚡', level: 'Beginner to Advanced', category: 'programming', teachers: 125 },
+            { id: 12, name: 'Web Development', icon: '🌍', level: 'Beginner to Advanced', category: 'programming', teachers: 130 }
+        ];
+
+        let currentFilter = 'all';
+
+        // Initialize Skills Grid
+        function initializeSkills() {
+            displaySkills(skillsData);
+        }
+
+        // Display Skills
+        function displaySkills(skills) {
+            const skillsGrid = document.getElementById('skillsGrid');
+            skillsGrid.innerHTML = '';
+
+            skills.forEach(skill => {
+                const skillCard = document.createElement('div');
+                skillCard.className = 'skill-card';
+                skillCard.innerHTML = `
+                    <div class="skill-icon">${skill.icon}</div>
+                    <div class="skill-name">${skill.name}</div>
+                    <div class="skill-level">📈 ${skill.level}</div>
+                    <div class="skill-teachers">👨‍🏫 ${skill.teachers} Experts Teaching</div>
+                    <button class="btn btn-access" onclick="requestAccess('${skill.name}')">Request Access</button>
+                `;
+                skillsGrid.appendChild(skillCard);
+            });
+        }
+
+        // Filter Skills
+        function filterSkills(category) {
+            currentFilter = category;
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const filtered = category === 'all' 
+                ? skillsData 
+                : skillsData.filter(skill => skill.category === category);
+            
+            displaySkills(filtered);
+        }
+
+        // Request Access
+        function requestAccess(skillName) {
+            alert(`You requested access to ${skillName}! Complete your profile to start learning.`);
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            
+            if (event.target === signupModal) {
+                signupModal.style.display = 'none';
+            }
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        }
+
+        // Form Submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+
+            if (password !== confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            alert(`Account created for ${name}! Verification email sent to ${email}`);
+            closeModal('signupModal');
+            this.reset();
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            alert(`Login attempt for ${email}. Please verify your email first.`);
+            closeModal('loginModal');
+            this.reset();
+        });
+
+        // Initialize on load
+        window.addEventListener('load', initializeSkills);
+    </script>
+</body>
+</html>
